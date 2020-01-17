@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.common.dev.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.common.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/core.js'></script>
+</head>
+
+<body>
+  <div id="app">
+      <counter-component @increment="calcul"></counter-component>   
+    <button @click="calcul(200)">press+200</button>
+      {{cash}}
+
+  </div>
+  <script>
+
+      Vue.component('counter-component',{
+        props:['data'],
+        template:`<div>
+              <input type="number" v-model="counter">
+              <button @click="plusCount">{{counter}}</button>
+          </div>`,
+        data:function(){
+          return{
+            counter:3 //這裡沒有逗號喔!小心出錯
+          }
+        },
+        methods:{
+          plusCount:function(){
+            this.$emit('increment', Number(this.counter));
+          }
+        }
+      
+      })
+      var app = new Vue({
+        el:'#app',
+        data:{
+          cash:300,
+        },
+        methods:{
+          calcul:function(n){ //記得帶入參數
+            //console.log('n')已成功
+            this.cash = this.cash + n
+          }
+        }
+      })
+  </script>
+</body>
+</html>
